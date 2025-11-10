@@ -419,7 +419,7 @@ export default function AgentsNavigationPage() {
         className="bg-background-tint-01"
         rightChildren={
           <div data-testid="AgentsPage/new-agent-button">
-            <Button href="/assistants/new" leftIcon={SvgPlus}>
+            <Button href="/chat/agents/new" leftIcon={SvgPlus}>
               New Agent
             </Button>
           </div>
