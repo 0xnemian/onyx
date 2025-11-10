@@ -6,16 +6,14 @@ import { SvgProps } from "@/icons";
 import { cn } from "@/lib/utils";
 import Text from "@/refresh-components/texts/Text";
 import { useEffect, useRef, useState } from "react";
-import { BackButton } from "@/refresh-components/buttons/BackButton";
 
 export interface PageHeaderProps {
-  icon?: React.FunctionComponent<SvgProps>;
+  icon: React.FunctionComponent<SvgProps>;
   title: string;
   description: string;
   className?: string;
   children?: React.ReactNode;
   rightChildren?: React.ReactNode;
-  back?: boolean;
 }
 
 export default function PageHeader({
@@ -25,7 +23,6 @@ export default function PageHeader({
   className,
   children,
   rightChildren,
-  back,
 }: PageHeaderProps) {
   const [showShadow, setShowShadow] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -53,18 +50,13 @@ export default function PageHeader({
   return (
     <div ref={headerRef} className={cn("pt-10 sticky top-0 z-10", className)}>
       <div className="flex flex-col gap-6 px-4 pt-4 pb-2">
-        {back && (
-          <div className="flex">
-            <BackButton />
-          </div>
-        )}
         <div className="flex flex-col">
-          {Icon && <Icon className="stroke-text-04 h-[1.75rem] w-[1.75rem]" />}
           <div className="flex flex-row justify-between items-center gap-4">
-            <Text headingH2>{title}</Text>
+            <Icon className="stroke-text-04 h-[1.75rem] w-[1.75rem]" />
             {rightChildren}
           </div>
           <div className="flex flex-col">
+            <Text headingH2>{title}</Text>
             <Text secondaryBody text03>
               {description}
             </Text>

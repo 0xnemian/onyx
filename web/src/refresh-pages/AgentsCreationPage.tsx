@@ -1,7 +1,6 @@
 "use client";
 
-import PageHeader from "@/refresh-components/headers/PageHeader";
-import SvgOnyxOctagon from "@/icons/onyx-octagon";
+import SimplePageHeader from "@/refresh-components/headers/SimplePageHeader";
 import PageLayout from "@/refresh-components/layouts/PageLayout";
 import Button from "@/refresh-components/buttons/Button";
 import { AssistantEditor } from "@/app/admin/assistants/AssistantEditor";
@@ -47,11 +46,9 @@ export default function AgentsCreationPage({
       data-testid="AgentsCreationPage/container"
       aria-label="Create Agent Page"
     >
-      <PageHeader
+      <SimplePageHeader
         title="Create Agent"
-        description=""
         className="bg-background-tint-01"
-        back
         rightChildren={
           <div className="flex flex-row gap-2">
             <Button secondary onClick={handleCancel}>
