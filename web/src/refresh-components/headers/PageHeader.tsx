@@ -6,7 +6,7 @@ import { SvgProps } from "@/icons";
 import { cn } from "@/lib/utils";
 import Text from "@/refresh-components/texts/Text";
 import { useEffect, useRef, useState } from "react";
-import { BackButton } from "@/components/BackButton";
+import { BackButton } from "@/refresh-components/buttons/BackButton";
 
 export interface PageHeaderProps {
   icon: React.FunctionComponent<SvgProps>;

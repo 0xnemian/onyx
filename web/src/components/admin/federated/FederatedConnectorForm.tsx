@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { AlertTriangle, Check, Loader2, Trash2Icon, Info } from "lucide-react";
-import { BackButton } from "@/components/BackButton";
+import { BackButton } from "@/refresh-components/buttons/BackButton";
 import Title from "@/components/ui/title";
 import {
   DropdownMenu,
