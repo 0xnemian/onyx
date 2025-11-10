@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/refresh-components/buttons/BackButton";
 
 export interface PageHeaderProps {
-  icon: React.FunctionComponent<SvgProps>;
+  icon?: React.FunctionComponent<SvgProps>;
   title: string;
   description: string;
   className?: string;
@@ -59,12 +59,12 @@ export default function PageHeader({
           </div>
         )}
         <div className="flex flex-col">
+          {Icon && <Icon className="stroke-text-04 h-[1.75rem] w-[1.75rem]" />}
           <div className="flex flex-row justify-between items-center gap-4">
-            <Icon className="stroke-text-04 h-[1.75rem] w-[1.75rem]" />
+            <Text headingH2>{title}</Text>
             {rightChildren}
           </div>
           <div className="flex flex-col">
-            <Text headingH2>{title}</Text>
             <Text secondaryBody text03>
               {description}
             </Text>

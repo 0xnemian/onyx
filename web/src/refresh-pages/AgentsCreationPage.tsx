@@ -4,15 +4,41 @@ import PageHeader from "@/refresh-components/headers/PageHeader";
 import SvgOnyxOctagon from "@/icons/onyx-octagon";
 import PageLayout from "@/refresh-components/layouts/PageLayout";
 import Button from "@/refresh-components/buttons/Button";
+import { AssistantEditor } from "@/app/admin/assistants/AssistantEditor";
+import { CCPairBasicInfo, DocumentSetSummary, User } from "@/lib/types";
+import { LLMProviderView } from "@/app/admin/configuration/llm/interfaces";
+import { ToolSnapshot } from "@/lib/tools/interfaces";
+import { FullPersona } from "@/app/admin/assistants/interfaces";
 
-export default function AgentsCreationPage() {
+export interface AgentsCreationPageProps {
+  existingPersona?: FullPersona | null;
+  ccPairs: CCPairBasicInfo[];
+  documentSets: DocumentSetSummary[];
+  user: User | null;
+  defaultPublic: boolean;
+  llmProviders: LLMProviderView[];
+  tools: ToolSnapshot[];
+  shouldAddAssistantToUserPreferences?: boolean;
+}
+
+export default function AgentsCreationPage({
+  existingPersona,
+  ccPairs,
+  documentSets,
+  user,
+  defaultPublic,
+  llmProviders,
+  tools,
+  shouldAddAssistantToUserPreferences,
+}: AgentsCreationPageProps) {
   const handleCancel = () => {
     // Navigate back or to agents page
     window.history.back();
   };
 
   const handleCreate = () => {
-    // TODO: Implement agent creation logic
+    // The AssistantEditor handles the creation logic
+    // This button will be replaced by the form submit in AssistantEditor
     console.log("Create agent");
   };
 
@@ -22,7 +48,6 @@ export default function AgentsCreationPage() {
       aria-label="Create Agent Page"
     >
       <PageHeader
-        icon={SvgOnyxOctagon}
         title="Create Agent"
         description=""
         className="bg-background-tint-01"
@@ -37,8 +62,21 @@ export default function AgentsCreationPage() {
         }
       />
 
-      {/* Agent creation form content goes here */}
-      <div className="p-4">{/* TODO: Add agent creation form fields */}</div>
+      {/* Agent creation form */}
+      {/*<div className="p-4">
+        <AssistantEditor
+          existingPersona={existingPersona}
+          ccPairs={ccPairs}
+          documentSets={documentSets}
+          user={user}
+          defaultPublic={defaultPublic}
+          llmProviders={llmProviders}
+          tools={tools}
+          shouldAddAssistantToUserPreferences={
+            shouldAddAssistantToUserPreferences
+          }
+        />
+      </div>*/}
     </PageLayout>
   );
 }
