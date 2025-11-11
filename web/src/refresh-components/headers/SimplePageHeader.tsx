@@ -17,7 +17,12 @@ export default function SimplePageHeader({
   rightChildren,
 }: SimplePageHeaderProps) {
   return (
-    <div className={cn("flex flex-col gap-4 px-3", className)}>
+    <div
+      className={cn(
+        "sticky top-0 z-10 flex flex-col gap-4 px-3 bg-background-tint-01",
+        className
+      )}
+    >
       <div className="flex flex-col gap-4 pt-6">
         <BackButton />
         <div className="flex flex-col gap-6 px-2">

@@ -411,7 +411,10 @@ export default function AgentsNavigationPage() {
   }, [selectedActionIds, selectedMcpServerIds, uniqueActions]);
 
   return (
-    <PageLayout data-testid="AgentsPage/container" aria-label="Agents Page">
+    <PageLayout
+      data-testid="AgentsNavigationPage/container"
+      aria-label="Agents Navigation Page"
+    >
       <PageHeader
         icon={SvgOnyxOctagon}
         title="Agents & Assistants"

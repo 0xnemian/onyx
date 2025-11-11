@@ -1,12 +1,12 @@
 import { ErrorCallout } from "@/components/ErrorCallout";
 import CardSection from "@/components/admin/CardSection";
 import { AssistantEditor } from "@/app/admin/assistants/AssistantEditor";
-import { fetchAssistantEditorInfoSS } from "@/lib/assistants/fetchPersonaEditorInfoSS";
+import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
 import { ProjectsProvider } from "@/app/chat/projects/ProjectsContext";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
-  const [values, error] = await fetchAssistantEditorInfoSS(params.id);
+  const [values, error] = await fetchAgentEditorInfoSS(params.id);
 
   if (!values) {
     return (

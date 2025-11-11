@@ -1,10 +1,9 @@
-import { fetchAssistantEditorInfoSS } from "@/lib/assistants/fetchPersonaEditorInfoSS";
+import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import { ProjectsProvider } from "@/app/chat/projects/ProjectsContext";
-import AgentsCreationPage from "@/refresh-pages/AgentsCreationPage";
+import AgentsCreationPage from "@/refresh-pages/AgentsEditorPage";
 
 export default async function Page() {
-  const [values, error] = await fetchAssistantEditorInfoSS();
+  const [values, error] = await fetchAgentEditorInfoSS();
 
   if (!values) {
     return (
@@ -15,12 +14,10 @@ export default async function Page() {
   }
 
   return (
-    <ProjectsProvider>
-      <AgentsCreationPage
-        {...values}
-        defaultPublic={false}
-        shouldAddAssistantToUserPreferences={true}
-      />
-    </ProjectsProvider>
+    <AgentsCreationPage
+      {...values}
+      defaultPublic={false}
+      shouldAddAssistantToUserPreferences={true}
+    />
   );
 }
