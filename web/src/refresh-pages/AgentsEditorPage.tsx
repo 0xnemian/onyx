@@ -166,7 +166,7 @@ export interface AgentsCreationPageProps {
   shouldAddAssistantToUserPreferences?: boolean;
 }
 
-export default function AgentsCreationPage({
+export default function AgentsEditorPage({
   existingAgent,
   ccPairs,
   documentSets,
