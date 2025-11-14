@@ -12,10 +12,14 @@ import SvgTrash from "@/icons/trash";
 import SvgEditBig from "@/icons/edit-big";
 import { buildImgUrl } from "@/app/chat/components/files/images/utils";
 import { cn } from "@/lib/utils";
-import { Formik, Form } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import LabeledInputTypeIn from "@/refresh-components/formik-fields/LabeledInputTypeIn";
 import LabeledInputTextArea from "@/refresh-components/formik-fields/LabeledInputTextArea";
+import UnlabeledInputTypeInElement from "@/refresh-components/formik-fields/UnlabeledInputTypeInElement";
+import Separator from "@/refresh-components/Separator";
+import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
+import { useFormikContext } from "formik";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -157,7 +161,49 @@ function Section({
   );
 }
 
-export interface AgentsCreationPageProps {
+interface ConversationStartersProps {
+  maxStarters: number;
+}
+
+function ConversationStarters({ maxStarters }: ConversationStartersProps) {
+  const { values } = useFormikContext<{
+    starters: string[];
+  }>();
+
+  const starters = values.starters || [];
+
+  // Count how many non-empty starters we have
+  const filledStarters = starters.filter((s) => s).length;
+  const canAddMore = filledStarters < maxStarters;
+
+  // Show at least 1, or all filled ones, or filled + 1 empty (up to max)
+  const visibleCount = Math.min(
+    maxStarters,
+    Math.max(
+      1,
+      filledStarters === 0 ? 1 : filledStarters + (canAddMore ? 1 : 0)
+    )
+  );
+
+  return (
+    <FieldArray name="starters">
+      {(arrayHelpers) => (
+        <div className="flex flex-col gap-2">
+          {Array.from({ length: visibleCount }, (_, i) => (
+            <UnlabeledInputTypeInElement
+              key={`starters.${i}`}
+              name={`starters.${i}`}
+              placeholder="Enter a conversation starter..."
+              onRemove={() => arrayHelpers.remove(i)}
+            />
+          ))}
+        </div>
+      )}
+    </FieldArray>
+  );
+}
+
+export interface AgentEditorPageProps {
   // If this is non-null, we assume that we are "editing an existing agent".
   // Otherwise, if this is null, we assume that we are "creating a new agent".
   existingAgent?: FullPersona | null;
@@ -169,7 +215,7 @@ export interface AgentsCreationPageProps {
   shouldAddAssistantToUserPreferences?: boolean;
 }
 
-export default function AgentsEditorPage({
+export default function AgentEditorPage({
   existingAgent,
   ccPairs,
   documentSets,
@@ -177,10 +223,17 @@ export default function AgentsEditorPage({
   llmProviders,
   tools,
   shouldAddAssistantToUserPreferences,
-}: AgentsCreationPageProps) {
+}: AgentEditorPageProps) {
+  const MAX_STARTERS = 4;
+
   const initialValues = {
     name: existingAgent?.name ?? "",
     description: existingAgent?.description ?? "",
+    instructions: existingAgent?.system_prompt ?? "",
+    starters: Array.from(
+      { length: MAX_STARTERS },
+      (_, i) => existingAgent?.starter_messages?.[i] ?? ""
+    ),
     icon_color: existingAgent?.icon_color ?? "",
     icon_shape: existingAgent?.icon_shape ?? 0,
     uploaded_image: null,
@@ -189,6 +242,8 @@ export default function AgentsEditorPage({
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Agent name is required"),
     description: Yup.string().required("Description is required"),
+    instructions: Yup.string(),
+    starters: Yup.array().of(Yup.string()),
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
@@ -238,28 +293,42 @@ export default function AgentsEditorPage({
                   label="Description"
                   placeholder="What does this agent do?"
                 />
-
-                {/* Labels - TODO: Implement later */}
-                <div className="text-sm text-text-03">
-                  Labels: Coming soon...
-                </div>
               </Section>
+
+              <Separator />
 
               <Section>
                 {/* Instructions */}
-                <div className="text-sm text-text-03">
-                  Instructions: Coming soon...
-                </div>
+                <LabeledInputTextArea
+                  name="instructions"
+                  label="Instructions"
+                  placeholder="Think step by step and show reasoning for complex problems. Use specific examples. Emphasize action items, and leave blanks for the human to fill in when you have unknown. Use a polite enthusiastic tone."
+                  optional
+                  description="Add instructions to tailor the response for this agent."
+                />
+
                 {/* Conversation Starters */}
-                <div className="text-sm text-text-03">
-                  Conversation Starters: Coming soon...
+                <div className="flex flex-col gap-1">
+                  <FieldLabel
+                    name="conversation-starters"
+                    label="Conversation Starters"
+                    description="Example messages that help users understand what this agent can do and how to interact with it effectively."
+                    optional
+                  />
+                  <ConversationStarters maxStarters={MAX_STARTERS} />
                 </div>
               </Section>
 
+              <Separator />
+
               <Section>
                 {/* Knowledge */}
-                <div className="text-sm text-text-03">
-                  Knowledge: Coming soon...
+                <div className="flex flex-col gap-1">
+                  <FieldLabel
+                    name="knowledge"
+                    label="Knowledge"
+                    description="Add specific connectors and documents for this agent should use to inform its responses."
+                  />
                 </div>
               </Section>
 

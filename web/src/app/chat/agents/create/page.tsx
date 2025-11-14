@@ -1,6 +1,6 @@
 import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import AgentsEditorPage from "@/refresh-pages/AgentEditorPage";
+import AgentEditorPage from "@/refresh-pages/AgentEditorPage";
 
 export default async function Page() {
   const [values, error] = await fetchAgentEditorInfoSS();
@@ -14,7 +14,7 @@ export default async function Page() {
   }
 
   return (
-    <AgentsEditorPage
+    <AgentEditorPage
       {...values}
       defaultPublic={false}
       shouldAddAssistantToUserPreferences={true}

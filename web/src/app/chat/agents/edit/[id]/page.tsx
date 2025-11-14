@@ -1,6 +1,6 @@
 import { ErrorCallout } from "@/components/ErrorCallout";
 import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
-import AgentsEditorPage from "@/refresh-pages/AgentEditorPage";
+import AgentEditorPage from "@/refresh-pages/AgentEditorPage";
 
 export interface PageProps {
   params: Promise<{ id: string }>;
@@ -18,5 +18,5 @@ export default async function Page(props: PageProps) {
     );
   }
 
-  return <AgentsEditorPage {...values} defaultPublic={false} />;
+  return <AgentEditorPage {...values} defaultPublic={false} />;
 }

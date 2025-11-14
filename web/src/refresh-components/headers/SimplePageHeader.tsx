@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Text from "@/refresh-components/texts/Text";
 import { BackButton } from "@/refresh-components/buttons/BackButton";
-import { Separator } from "@/components/ui/separator";
+import Separator from "@/refresh-components/Separator";
 
 export interface SimplePageHeaderProps {
   title: string;

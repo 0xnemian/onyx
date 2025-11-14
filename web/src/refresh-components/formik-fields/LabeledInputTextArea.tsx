@@ -9,7 +9,7 @@ import {
   FieldError,
 } from "@/refresh-components/formik-fields/helpers";
 
-interface LabeledInputTextAreaProps
+export interface LabeledInputTextAreaProps
   extends Omit<InputTextAreaProps, "value" | "onChange"> {
   name: string;
   label: string;
@@ -48,7 +48,7 @@ export default function LabeledInputTextArea({
           field.onChange(e);
         }}
         onBlur={field.onBlur}
-        isError={!!hasError}
+        erroneous={!!hasError}
       />
 
       {/* Error Message */}

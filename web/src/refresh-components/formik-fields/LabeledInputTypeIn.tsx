@@ -9,7 +9,7 @@ import {
   FieldError,
 } from "@/refresh-components/formik-fields/helpers";
 
-interface LabeledInputTypeInProps
+export interface LabeledInputTypeInProps
   extends Omit<InputTypeInProps, "value" | "onChange" | "onClear"> {
   name: string;
   label: string;
