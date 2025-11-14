@@ -348,6 +348,8 @@ export default function AgentEditorPage({
                 <Section></Section>
               </CollapsibleSection>
 
+              <Separator />
+
               {/* Access */}
               <Section>
                 <div className="flex flex-col gap-1">
@@ -359,6 +361,8 @@ export default function AgentEditorPage({
                 </div>
               </Section>
 
+              <Separator />
+
               {/* Advanced */}
               <CollapsibleSection
                 title="Advanced"
@@ -366,8 +370,6 @@ export default function AgentEditorPage({
               >
                 <Section></Section>
               </CollapsibleSection>
-
-              {/* More to implement later ... */}
             </div>
           </Form>
         )}
