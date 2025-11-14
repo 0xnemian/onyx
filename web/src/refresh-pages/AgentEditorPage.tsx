@@ -20,6 +20,7 @@ import UnlabeledInputTypeInElement from "@/refresh-components/formik-fields/Unla
 import Separator from "@/refresh-components/Separator";
 import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
+import { CONVERSATION_STARTERS } from "@/lib/constants";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -193,7 +194,9 @@ function ConversationStarters({ maxStarters }: ConversationStartersProps) {
             <UnlabeledInputTypeInElement
               key={`starters.${i}`}
               name={`starters.${i}`}
-              placeholder="Enter a conversation starter..."
+              placeholder={
+                CONVERSATION_STARTERS[i] || "Enter a conversation starter..."
+              }
               onRemove={() => arrayHelpers.remove(i)}
             />
           ))}
