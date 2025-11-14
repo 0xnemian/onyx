@@ -1,30 +1,30 @@
 "use client";
 
 import { useField } from "formik";
-import InputTypeIn, {
-  InputTypeInProps,
-} from "@/refresh-components/inputs/InputTypeIn";
+import InputTextArea, {
+  InputTextAreaProps,
+} from "@/refresh-components/inputs/InputTextArea";
 import {
   FieldLabel,
   FieldError,
 } from "@/refresh-components/formik-fields/helpers";
 
-interface LabeledInputTypeInProps
-  extends Omit<InputTypeInProps, "value" | "onChange" | "onClear"> {
+interface LabeledInputTextAreaProps
+  extends Omit<InputTextAreaProps, "value" | "onChange"> {
   name: string;
   label: string;
   optional?: boolean;
   description?: string;
 }
 
-export default function LabeledInputTypeIn({
+export default function LabeledInputTextArea({
   name,
   label,
   optional,
   description,
-  ...inputProps
-}: LabeledInputTypeInProps) {
-  const [field, meta, helpers] = useField(name);
+  ...textareaProps
+}: LabeledInputTextAreaProps) {
+  const [field, meta] = useField(name);
 
   const hasError = meta.touched && meta.error;
 
@@ -38,9 +38,9 @@ export default function LabeledInputTypeIn({
         description={description}
       />
 
-      {/* Input */}
-      <InputTypeIn
-        {...inputProps}
+      {/* Textarea */}
+      <InputTextArea
+        {...textareaProps}
         id={name}
         name={name}
         value={field.value || ""}
@@ -48,10 +48,7 @@ export default function LabeledInputTypeIn({
           field.onChange(e);
         }}
         onBlur={field.onBlur}
-        onClear={() => {
-          helpers.setValue("");
-        }}
-        erroneous={!!hasError}
+        isError={!!hasError}
       />
 
       {/* Error Message */}

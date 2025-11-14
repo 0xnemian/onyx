@@ -12,9 +12,10 @@ import SvgTrash from "@/icons/trash";
 import SvgEditBig from "@/icons/edit-big";
 import { buildImgUrl } from "@/app/chat/components/files/images/utils";
 import { cn } from "@/lib/utils";
-import { Formik, Form, FastField } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { TextFormField } from "@/components/Field";
+import LabeledInputTypeIn from "@/refresh-components/formik-fields/LabeledInputTypeIn";
+import LabeledInputTextArea from "@/refresh-components/formik-fields/LabeledInputTextArea";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -151,7 +152,9 @@ function Section({
   className,
   ...rest
 }: React.HtmlHTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex flex-col gap-4", className)} {...rest} />;
+  return (
+    <div className={cn("flex flex-col w-full gap-4", className)} {...rest} />
+  );
 }
 
 export interface AgentsCreationPageProps {
@@ -198,13 +201,12 @@ export default function AgentsEditorPage({
       data-testid="AgentsEditorPage/container"
       aria-label="Agents Editor Page"
     >
-      <div className="h-[12rem] w-full border" />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        validateOnChange={false}
-        validateOnBlur={false}
+        validateOnChange={true}
+        validateOnBlur={true}
       >
         {({ isSubmitting }) => (
           <Form className="w-full h-full flex flex-col">
@@ -223,33 +225,19 @@ export default function AgentsEditorPage({
                 <AgentIconEditor existingAgent={existingAgent} />
 
                 {/* Name */}
-                <FastField name="name">
-                  {({ field }: any) => (
-                    <TextFormField
-                      {...field}
-                      maxWidth="max-w-lg"
-                      name="name"
-                      label="Name"
-                      placeholder="Email Assistant"
-                      aria-label="agent-name-input"
-                      className="[&_input]:placeholder:text-text-03"
-                    />
-                  )}
-                </FastField>
+                <LabeledInputTypeIn
+                  name="name"
+                  label="Name"
+                  placeholder="Name your agent"
+                  aria-label="agent-name-input"
+                />
 
                 {/* Description */}
-                <FastField name="description">
-                  {({ field }: any) => (
-                    <TextFormField
-                      {...field}
-                      maxWidth="max-w-lg"
-                      name="description"
-                      label="Description"
-                      placeholder="Use this Assistant to help draft professional emails"
-                      className="[&_input]:placeholder:text-text-03"
-                    />
-                  )}
-                </FastField>
+                <LabeledInputTextArea
+                  name="description"
+                  label="Description"
+                  placeholder="What does this agent do?"
+                />
 
                 {/* Labels - TODO: Implement later */}
                 <div className="text-sm text-text-03">

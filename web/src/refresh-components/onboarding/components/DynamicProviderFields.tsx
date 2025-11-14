@@ -78,7 +78,7 @@ export const DynamicProviderFields: React.FC<DynamicProviderFieldsProps> = ({
               <FormField.Control>
                 <InputTypeIn
                   {...field}
-                  isError={apiStatus === "error"}
+                  erroneous={apiStatus === "error"}
                   placeholder={
                     override?.placeholder ||
                     llmDescriptor.default_api_base ||
@@ -146,7 +146,7 @@ export const DynamicProviderFields: React.FC<DynamicProviderFieldsProps> = ({
                       field.onBlur(e);
                       handleApiKeyInteraction(field.value);
                     }}
-                    isError={apiStatus === "error"}
+                    erroneous={apiStatus === "error"}
                   />
                 ) : (
                   <InputTypeIn
@@ -154,7 +154,7 @@ export const DynamicProviderFields: React.FC<DynamicProviderFieldsProps> = ({
                     placeholder={override?.placeholder || ""}
                     disabled={disabled}
                     showClearButton={false}
-                    isError={apiStatus === "error"}
+                    erroneous={apiStatus === "error"}
                     onBlur={(e) => {
                       field.onBlur(e);
                       handleApiKeyInteraction(field.value);
@@ -246,7 +246,7 @@ export const DynamicProviderFields: React.FC<DynamicProviderFieldsProps> = ({
                     onChange={(e) => {
                       helper.setValue(e.target.value);
                     }}
-                    isError={modelsApiStatus === "error"}
+                    erroneous={modelsApiStatus === "error"}
                     placeholder="E.g. gpt-4"
                     disabled={disabled}
                     showClearButton={false}
