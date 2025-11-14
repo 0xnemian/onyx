@@ -19,7 +19,7 @@ export default function SimplePageHeader({
   return (
     <div
       className={cn(
-        "sticky top-0 z-10 flex flex-col gap-4 px-3 bg-background-tint-01",
+        "sticky top-0 z-10 flex flex-col gap-4 px-3 bg-background-tint-01 w-full",
         className
       )}
     >
