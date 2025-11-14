@@ -21,6 +21,7 @@ import Separator from "@/refresh-components/Separator";
 import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
 import { CONVERSATION_STARTERS } from "@/lib/constants";
+import CollapsibleSection from "@/refresh-components/CollapsibleSection";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -279,6 +280,7 @@ export default function AgentEditorPage({
 
             {/* Agent Form Content */}
             <div className="py-6 px-8 flex flex-col gap-8 w-full">
+              {/* General */}
               <Section className="max-w-4xl">
                 <AgentIconEditor existingAgent={existingAgent} />
 
@@ -300,6 +302,7 @@ export default function AgentEditorPage({
 
               <Separator />
 
+              {/* Prompts */}
               <Section>
                 {/* Instructions */}
                 <LabeledInputTextArea
@@ -324,8 +327,8 @@ export default function AgentEditorPage({
 
               <Separator />
 
+              {/* Knowledge */}
               <Section>
-                {/* Knowledge */}
                 <div className="flex flex-col gap-1">
                   <FieldLabel
                     name="knowledge"
@@ -334,6 +337,35 @@ export default function AgentEditorPage({
                   />
                 </div>
               </Section>
+
+              <Separator />
+
+              {/* Actions */}
+              <CollapsibleSection
+                title="Actions"
+                description="Tools and capabilities available for this agent to use."
+              >
+                <Section></Section>
+              </CollapsibleSection>
+
+              {/* Access */}
+              <Section>
+                <div className="flex flex-col gap-1">
+                  <FieldLabel
+                    name="access"
+                    label="Access"
+                    description="Control who can view and use this agent."
+                  />
+                </div>
+              </Section>
+
+              {/* Advanced */}
+              <CollapsibleSection
+                title="Advanced"
+                description="Fine-tune agent prompts and knowledge."
+              >
+                <Section></Section>
+              </CollapsibleSection>
 
               {/* More to implement later ... */}
             </div>
