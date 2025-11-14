@@ -53,12 +53,7 @@ export default function LabeledInputTypeIn({
 
       {/* Error Message */}
       {hasError && (
-        <Text
-          secondaryBody
-          as="div"
-          className="text-status-error-05"
-          role="alert"
-        >
+        <Text secondaryBody className="text-status-error-05" role="alert">
           {meta.error}
         </Text>
       )}
