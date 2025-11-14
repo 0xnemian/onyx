@@ -6,7 +6,6 @@ import IconButton from "@/refresh-components/buttons/IconButton";
 import SvgFold from "@/icons/fold";
 import SvgExpand from "@/icons/expand";
 import { cn, noProp } from "@/lib/utils";
-import { FieldLabel } from "./formik-fields/helpers";
 
 interface CollapsibleSectionProps {
   title: string;
