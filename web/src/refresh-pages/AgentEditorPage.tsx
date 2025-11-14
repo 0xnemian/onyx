@@ -22,6 +22,7 @@ import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
 import { CONVERSATION_STARTERS } from "@/lib/constants";
 import CollapsibleSection from "@/refresh-components/CollapsibleSection";
+import Text from "@/refresh-components/texts/Text";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -368,7 +369,22 @@ export default function AgentEditorPage({
                 title="Advanced"
                 description="Fine-tune agent prompts and knowledge."
               >
-                <Section></Section>
+                <Section>
+                  <div className="flex flex-col gap-1">
+                    {/* Reminders */}
+                    <LabeledInputTextArea
+                      name="reminders"
+                      label="Reminders"
+                      placeholder="Remember, I want you to always format your response as a numbered list."
+                    />
+                    <Text text03 secondaryBody>
+                      Append a brief reminder to the prompt messages. Use this
+                      to remind the agent if you find that it tends to forget
+                      certain instructions as the chat progresses. This should
+                      be brief and not interfere with the user messages.
+                    </Text>
+                  </div>
+                </Section>
               </CollapsibleSection>
             </div>
           </Form>
