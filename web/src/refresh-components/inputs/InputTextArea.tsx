@@ -4,34 +4,34 @@ import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useBoundingBox } from "@/hooks/useBoundingBox";
 
-const divClasses = (active?: boolean, hovered?: boolean, isError?: boolean) =>
-  ({
-    defaulted: [
-      "border",
-      isError && "!border-status-error-05",
-      !isError && hovered && "border-border-02",
-      !isError && active && "border-border-05",
-    ],
-    internal: [],
-    disabled: ["bg-background-neutral-03"],
-  }) as const;
+const divClasses = {
+  main: [
+    "border",
+    "hover:border-border-02",
+    "active:!border-border-05",
+    "focus-within:!border-border-05",
+  ],
+  erroneous: ["border", "border-status-error-05"],
+  internal: [],
+  disabled: ["bg-background-neutral-03"],
+} as const;
 
-const textareaClasses = (active?: boolean) =>
-  ({
-    defaulted: [
-      "text-text-04 placeholder:!font-secondary-body placeholder:text-text-02",
-    ],
-    internal: [],
-    disabled: ["text-text-02"],
-  }) as const;
+const textareaClasses = {
+  main: [
+    "text-text-04 placeholder:!font-secondary-body placeholder:text-text-02",
+  ],
+  erroneous: [],
+  internal: [],
+  disabled: ["text-text-02"],
+} as const;
 
 export interface InputTextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   // Input states:
-  active?: boolean;
+  main?: boolean;
+  erroneous?: boolean;
   internal?: boolean;
   disabled?: boolean;
-  isError?: boolean;
 
   placeholder?: string;
 
@@ -41,10 +41,10 @@ export interface InputTextAreaProps
 
 function InputTextAreaInner(
   {
-    active,
+    main,
+    erroneous,
     internal,
     disabled,
-    isError,
 
     placeholder,
     className,
@@ -56,13 +56,20 @@ function InputTextAreaInner(
   ref: React.ForwardedRef<HTMLTextAreaElement>
 ) {
   const { ref: boundingBoxRef, inside: hovered } = useBoundingBox();
-  const [localActive, setLocalActive] = useState(active);
   const localRef = useRef<HTMLTextAreaElement>(null);
 
   // Use forwarded ref if provided, otherwise use local ref
   const textareaRef = ref || localRef;
 
-  const state = internal ? "internal" : disabled ? "disabled" : "defaulted";
+  const state = main
+    ? "main"
+    : internal
+      ? "internal"
+      : disabled
+        ? "disabled"
+        : erroneous
+          ? "erroneous"
+          : "main";
 
   useEffect(() => {
     // if disabled, set cursor to "not-allowed"
@@ -80,7 +87,7 @@ function InputTextAreaInner(
       ref={boundingBoxRef}
       className={cn(
         "flex flex-row items-start justify-between w-full h-fit p-1.5 rounded-08 bg-background-neutral-00 relative",
-        divClasses(localActive, hovered, isError)[state],
+        divClasses[state],
         className
       )}
       onClick={() => {
@@ -103,18 +110,9 @@ function InputTextAreaInner(
         rows={minRows}
         className={cn(
           "w-full min-h-[3rem] bg-transparent p-0.5 focus:outline-none resize-y",
-          textareaClasses(localActive)[state]
+          textareaClasses[state]
         )}
         {...props}
-        // Override the onFocus and onBlur props to set the local active state
-        onFocus={(e) => {
-          setLocalActive(true);
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          setLocalActive(false);
-          props.onBlur?.(e);
-        }}
       />
     </div>
   );

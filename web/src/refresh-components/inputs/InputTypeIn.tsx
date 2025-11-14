@@ -7,13 +7,17 @@ import SvgX from "@/icons/x";
 import IconButton from "@/refresh-components/buttons/IconButton";
 import SvgSearch from "@/icons/search";
 
-const divClasses = (hovered?: boolean) =>
-  ({
-    main: ["border", "active:border-border-05", hovered && "border-border-02"],
-    erroneous: ["border", "border-status-error-05"],
-    internal: [],
-    disabled: ["bg-background-neutral-03"],
-  }) as const;
+const divClasses = {
+  main: [
+    "border",
+    "hover:border-border-02",
+    "active:!border-border-05",
+    "focus-within:!border-border-05",
+  ],
+  erroneous: ["border", "border-status-error-05"],
+  internal: [],
+  disabled: ["bg-background-neutral-03"],
+} as const;
 
 const inputClasses = {
   main: [
@@ -117,7 +121,7 @@ function InputTypeInInner(
       ref={boundingBoxRef}
       className={cn(
         "flex flex-row items-center justify-between w-full h-fit p-1.5 rounded-08 bg-background-neutral-00 relative",
-        divClasses(hovered)[state],
+        divClasses[state],
         className
       )}
       onClick={() => {
