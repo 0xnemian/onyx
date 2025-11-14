@@ -1,6 +1,6 @@
 import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import AgentsEditorPage from "@/refresh-pages/AgentsEditorPage";
+import AgentsEditorPage from "@/refresh-pages/AgentEditorPage";
 
 export default async function Page() {
   const [values, error] = await fetchAgentEditorInfoSS();

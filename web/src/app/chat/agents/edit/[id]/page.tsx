@@ -1,6 +1,6 @@
 import { ErrorCallout } from "@/components/ErrorCallout";
 import fetchAgentEditorInfoSS from "@/lib/assistants/fetchAgentEditorInfoSS";
-import AgentsEditorPage from "@/refresh-pages/AgentsEditorPage";
+import AgentsEditorPage from "@/refresh-pages/AgentEditorPage";
 
 export interface PageProps {
   params: Promise<{ id: string }>;
