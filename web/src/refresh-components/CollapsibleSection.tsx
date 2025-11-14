@@ -6,6 +6,7 @@ import IconButton from "@/refresh-components/buttons/IconButton";
 import SvgFold from "@/icons/fold";
 import SvgExpand from "@/icons/expand";
 import { cn, noProp } from "@/lib/utils";
+import { useBoundingBox } from "@/hooks/useBoundingBox";
 
 interface CollapsibleSectionProps {
   title: string;
@@ -20,14 +21,16 @@ export default function CollapsibleSection({
   children,
   defaultExpanded = true,
 }: CollapsibleSectionProps) {
+  const { ref, inside } = useBoundingBox();
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col group/CollapsibleSection">
       {/* Header */}
       <div
         className="flex flex-row items-center justify-between gap-4 cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
+        ref={ref}
       >
         {/* Left side: Title and Description */}
         <div className="flex flex-col gap-0.5">
@@ -47,6 +50,7 @@ export default function CollapsibleSection({
           internal
           onClick={noProp(() => setIsExpanded(!isExpanded))}
           tooltip={isExpanded ? "Collapse" : "Expand"}
+          transient={inside}
         />
       </div>
 
@@ -55,11 +59,11 @@ export default function CollapsibleSection({
         className={cn(
           "overflow-hidden transition-all duration-300 ease-in-out",
           isExpanded
-            ? "z-10 opacity-100 translate-y-0 pt-2"
-            : "-z-10 opacity-0 -translate-y-2 pt-0"
+            ? "max-h-screen opacity-100 pt-4 translate-y-0"
+            : "max-h-0 opacity-0 pt-0 -translate-y-2"
         )}
       >
-        <div className="pt-1">{children}</div>
+        {children}
       </div>
     </div>
   );
