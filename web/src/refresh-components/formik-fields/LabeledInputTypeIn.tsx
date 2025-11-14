@@ -25,7 +25,6 @@ export default function LabeledInputTypeIn({
   ...inputProps
 }: LabeledInputTypeInProps) {
   const [field, meta, helpers] = useField(name);
-
   const hasError = meta.touched && meta.error;
 
   return (
@@ -44,9 +43,7 @@ export default function LabeledInputTypeIn({
         id={name}
         name={name}
         value={field.value || ""}
-        onChange={(e) => {
-          field.onChange(e);
-        }}
+        onChange={field.onChange}
         onBlur={field.onBlur}
         onClear={() => {
           helpers.setValue("");

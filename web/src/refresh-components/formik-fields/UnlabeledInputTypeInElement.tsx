@@ -20,17 +20,9 @@ export default function UnlabeledInputTypeInElement({
   onRemove,
   ...inputProps
 }: UnlabeledInputTypeInElementProps) {
-  const [field, meta, helpers] = useField(name);
-
+  const [field, meta] = useField(name);
   const hasError = meta.touched && meta.error;
   const isEmpty = !field.value || field.value.trim() === "";
-
-  const handleRemoveClick = () => {
-    // Always remove from list if onRemove callback is provided
-    if (onRemove) {
-      onRemove();
-    }
-  };
 
   return (
     <div className="w-full flex flex-col gap-1">
@@ -41,9 +33,7 @@ export default function UnlabeledInputTypeInElement({
           id={name}
           name={name}
           value={field.value || ""}
-          onChange={(e) => {
-            field.onChange(e);
-          }}
+          onChange={field.onChange}
           onBlur={field.onBlur}
           erroneous={!!hasError}
           showClearButton={false}
@@ -52,7 +42,7 @@ export default function UnlabeledInputTypeInElement({
           icon={SvgMinusCircle}
           tertiary
           disabled={!onRemove || isEmpty}
-          onClick={handleRemoveClick}
+          onClick={onRemove}
           tooltip="Remove"
         />
       </div>

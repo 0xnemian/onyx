@@ -25,7 +25,6 @@ export default function LabeledInputTextArea({
   ...textareaProps
 }: LabeledInputTextAreaProps) {
   const [field, meta] = useField(name);
-
   const hasError = meta.touched && meta.error;
 
   return (
@@ -44,9 +43,7 @@ export default function LabeledInputTextArea({
         id={name}
         name={name}
         value={field.value || ""}
-        onChange={(e) => {
-          field.onChange(e);
-        }}
+        onChange={field.onChange}
         onBlur={field.onBlur}
         erroneous={!!hasError}
       />
