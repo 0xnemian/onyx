@@ -15,8 +15,8 @@ export function FieldLabel({
   description,
 }: FieldLabelProps) {
   return (
-    <div className="flex flex-col gap-0.5">
-      <label htmlFor={name} className="flex flex-row gap-1.5">
+    <label htmlFor={name} className="flex flex-col gap-0.5">
+      <div className="flex flex-row gap-1.5">
         <Text mainUiAction text04>
           {label}
         </Text>
@@ -25,13 +25,13 @@ export function FieldLabel({
             {" (Optional)"}
           </Text>
         )}
-      </label>
+      </div>
       {description && (
         <Text secondaryBody text03>
           {description}
         </Text>
       )}
-    </div>
+    </label>
   );
 }
 
