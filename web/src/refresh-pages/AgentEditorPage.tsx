@@ -406,23 +406,23 @@ export default function AgentEditorPage({
                 description="Fine-tune agent prompts and knowledge."
               >
                 <Section>
+                  <Card>
+                    {/* Current Datetime Aware */}
+                    <LabeledSwitchField
+                      name="current_datetime_aware"
+                      label="Current Datetime Aware"
+                      description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
+                    />
+
+                    {/* Prompt Override */}
+                    <LabeledSwitchField
+                      name="overwrite_system_prompts"
+                      label="Overwrite System Prompts"
+                      description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
+                    />
+                  </Card>
+
                   <div className="flex flex-col gap-1">
-                    <Card>
-                      {/* Current Datetime Aware */}
-                      <LabeledSwitchField
-                        name="current_datetime_aware"
-                        label="Current Datetime Aware"
-                        description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
-                      />
-
-                      {/* Prompt Override */}
-                      <LabeledSwitchField
-                        name="overwrite_system_prompts"
-                        label="Overwrite System Prompts"
-                        description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
-                      />
-                    </Card>
-
                     {/* Reminders */}
                     <LabeledInputTextArea
                       name="reminders"
