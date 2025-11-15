@@ -50,7 +50,7 @@ function InputTextAreaInner(
     className,
     value,
     onChange,
-    minRows = 3,
+    minRows = 4,
     ...props
   }: InputTextAreaProps,
   ref: React.ForwardedRef<HTMLTextAreaElement>
