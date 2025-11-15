@@ -7,6 +7,7 @@ import SvgFold from "@/icons/fold";
 import SvgExpand from "@/icons/expand";
 import { cn, noProp } from "@/lib/utils";
 import { useBoundingBox } from "@/hooks/useBoundingBox";
+import { useContentSize } from "@/hooks/useContentSize";
 
 interface CollapsibleSectionProps {
   title: string;
@@ -23,6 +24,10 @@ export default function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const { ref, inside } = useBoundingBox();
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [contentRef, { height: contentHeight }] = useContentSize({
+    dimension: "height",
+    dependencies: [children, isExpanded],
+  });
 
   return (
     <div className="w-full flex flex-col group/CollapsibleSection">
@@ -57,13 +62,15 @@ export default function CollapsibleSection({
       {/* Children with animation */}
       <div
         className={cn(
-          "overflow-hidden transition-all duration-300 ease-in-out",
+          "grid transition-all duration-300 ease-in-out",
           isExpanded
-            ? "max-h-screen opacity-100 pt-4 translate-y-0"
-            : "max-h-0 opacity-0 pt-0 -translate-y-2"
+            ? "grid-rows-[1fr] opacity-100 pt-4"
+            : "grid-rows-[0fr] opacity-0 pt-0"
         )}
       >
-        {children}
+        <div className="overflow-hidden">
+          <div ref={contentRef}>{children}</div>
+        </div>
       </div>
     </div>
   );
