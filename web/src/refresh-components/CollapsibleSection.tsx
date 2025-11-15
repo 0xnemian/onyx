@@ -28,7 +28,7 @@ export default function CollapsibleSection({
     <div className="w-full flex flex-col group/CollapsibleSection">
       {/* Header */}
       <div
-        className="flex flex-row items-center justify-between gap-4 cursor-pointer"
+        className="flex flex-row items-center justify-between gap-4 cursor-pointer select-none"
         onClick={() => setIsExpanded(!isExpanded)}
         ref={ref}
       >
