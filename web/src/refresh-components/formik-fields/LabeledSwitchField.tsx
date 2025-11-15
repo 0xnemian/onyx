@@ -28,14 +28,16 @@ export default function LabeledInputSwitch({
   return (
     <div className="w-full flex flex-col gap-1">
       {/* Label and Switch Row */}
-      <div className="flex flex-row items-center justify-between gap-4">
+      <div className="flex flex-row items-start justify-between gap-4">
         {/* Left side: Label */}
-        <FieldLabel
-          name={name}
-          label={label}
-          description={description}
-          optional={optional}
-        />
+        <div className="w-[70%]">
+          <FieldLabel
+            name={name}
+            label={label}
+            description={description}
+            optional={optional}
+          />
+        </div>
 
         {/* Right side: Switch */}
         <UnlabeledSwitchField name={name} {...props} />
