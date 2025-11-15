@@ -5,9 +5,10 @@ import {
   FieldLabel,
   FieldError,
 } from "@/refresh-components/formik-fields/helpers";
-import { Switch } from "@/components/ui/switch";
+import { SwitchProps } from "@/refresh-components/inputs/Switch";
+import UnlabeledSwitchField from "@/refresh-components/formik-fields/UnlabeledSwitchField";
 
-interface LabeledInputSwitchProps {
+interface LabeledInputSwitchProps extends Omit<SwitchProps, "checked"> {
   name: string;
   label: string;
   description?: string;
@@ -19,9 +20,9 @@ export default function LabeledInputSwitch({
   label,
   description,
   optional,
+  ...props
 }: LabeledInputSwitchProps) {
-  const [field, meta, helpers] = useField<boolean>(name);
-
+  const [, meta] = useField<boolean>(name);
   const hasError = meta.touched && meta.error;
 
   return (
@@ -37,10 +38,7 @@ export default function LabeledInputSwitch({
         />
 
         {/* Right side: Switch */}
-        <Switch
-          checked={!!field.value}
-          onCheckedChange={(checked) => helpers.setValue(checked)}
-        />
+        <UnlabeledSwitchField name={name} {...props} />
       </div>
 
       {/* Error Message */}
