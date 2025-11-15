@@ -17,12 +17,14 @@ import * as Yup from "yup";
 import LabeledInputTypeIn from "@/refresh-components/formik-fields/LabeledInputTypeIn";
 import LabeledInputTextArea from "@/refresh-components/formik-fields/LabeledInputTextArea";
 import UnlabeledInputTypeInElement from "@/refresh-components/formik-fields/UnlabeledInputTypeInElement";
+import LabeledSwitchField from "@/refresh-components/formik-fields/LabeledSwitchField";
 import Separator from "@/refresh-components/Separator";
 import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
 import { CONVERSATION_STARTERS } from "@/lib/constants";
 import CollapsibleSection from "@/refresh-components/CollapsibleSection";
 import Text from "@/refresh-components/texts/Text";
+import Card from "@/refresh-components/Card";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -232,25 +234,51 @@ export default function AgentEditorPage({
   const MAX_STARTERS = 4;
 
   const initialValues = {
+    // General
+    icon_color: existingAgent?.icon_color ?? "",
+    icon_shape: existingAgent?.icon_shape ?? 0,
+    uploaded_image_id: existingAgent?.uploaded_image_id ?? null,
     name: existingAgent?.name ?? "",
     description: existingAgent?.description ?? "",
+
+    // Prompts
     instructions: existingAgent?.system_prompt ?? "",
-    starters: Array.from(
+    conversation_starters: Array.from(
       { length: MAX_STARTERS },
       (_, i) => existingAgent?.starter_messages?.[i] ?? ""
     ),
-    reminders: existingAgent?.task_prompt ?? "",
-    icon_color: existingAgent?.icon_color ?? "",
-    icon_shape: existingAgent?.icon_shape ?? 0,
-    uploaded_image: null,
+
+    // Knowledge
+
+    // Access
+    feature_this_agent: false,
+
+    // Advanced
+    knowledge_cutoff_date: new Date(),
+    current_datetime_aware: false,
+    overwrite_system_prompts: false,
+    reminders: "",
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Agent name is required"),
-    description: Yup.string().required("Description is required"),
-    instructions: Yup.string(),
-    starters: Yup.array().of(Yup.string()),
-    reminders: Yup.string(),
+    // General
+    name: Yup.string().required("Agent name is required."),
+    description: Yup.string().required("Description is required."),
+
+    // Prompts
+    instructions: Yup.string().optional(),
+    conversation_starters: Yup.array().of(Yup.string()),
+
+    // Knowledge
+
+    // Access
+    feature_this_agent: Yup.boolean(),
+
+    // Advanced
+    knowledge_cutoff_date: Yup.date().optional(),
+    current_datetime_aware: Yup.boolean(),
+    overwrite_system_prompts: Yup.boolean(),
+    reminders: Yup.string().optional(),
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
@@ -319,7 +347,7 @@ export default function AgentEditorPage({
                 {/* Conversation Starters */}
                 <div className="flex flex-col gap-1">
                   <FieldLabel
-                    name="conversation-starters"
+                    name="conversation_starters"
                     label="Conversation Starters"
                     description="Example messages that help users understand what this agent can do and how to interact with it effectively."
                     optional
@@ -355,13 +383,19 @@ export default function AgentEditorPage({
 
               {/* Access */}
               <Section>
-                <div className="flex flex-col gap-1">
-                  <FieldLabel
-                    name="access"
-                    label="Access"
-                    description="Control who can view and use this agent."
+                <FieldLabel
+                  name="access"
+                  label="Access"
+                  description="Control who can view and use this agent."
+                />
+
+                <Card>
+                  <LabeledSwitchField
+                    name="feature_this_agent"
+                    label="Feature This Agent"
+                    description="Show this agent in the featured section in the explore list for everyone in your organization. This will also pin the agent for any new users."
                   />
-                </div>
+                </Card>
               </Section>
 
               <Separator />
@@ -373,6 +407,22 @@ export default function AgentEditorPage({
               >
                 <Section>
                   <div className="flex flex-col gap-1">
+                    <Card>
+                      {/* Current Datetime Aware */}
+                      <LabeledSwitchField
+                        name="current_datetime_aware"
+                        label="Current Datetime Aware"
+                        description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
+                      />
+
+                      {/* Prompt Override */}
+                      <LabeledSwitchField
+                        name="overwrite_system_prompts"
+                        label="Overwrite System Prompts"
+                        description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
+                      />
+                    </Card>
+
                     {/* Reminders */}
                     <LabeledInputTextArea
                       name="reminders"
