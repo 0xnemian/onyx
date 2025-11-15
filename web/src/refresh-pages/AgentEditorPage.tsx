@@ -239,6 +239,7 @@ export default function AgentEditorPage({
       { length: MAX_STARTERS },
       (_, i) => existingAgent?.starter_messages?.[i] ?? ""
     ),
+    reminders: existingAgent?.task_prompt ?? "",
     icon_color: existingAgent?.icon_color ?? "",
     icon_shape: existingAgent?.icon_shape ?? 0,
     uploaded_image: null,
@@ -249,6 +250,7 @@ export default function AgentEditorPage({
     description: Yup.string().required("Description is required"),
     instructions: Yup.string(),
     starters: Yup.array().of(Yup.string()),
+    reminders: Yup.string(),
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
