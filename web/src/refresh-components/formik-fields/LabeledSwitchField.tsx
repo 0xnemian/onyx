@@ -26,7 +26,7 @@ export default function LabeledInputSwitch({
   const hasError = meta.touched && meta.error;
 
   return (
-    <div className="w-full flex flex-col gap-1">
+    <div className="flex flex-col gap-1 h-full w-full">
       {/* Label and Switch Row */}
       <div className="flex flex-row items-start justify-between gap-4">
         {/* Left side: Label */}

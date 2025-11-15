@@ -15,13 +15,13 @@ export function FieldLabel({
   description,
 }: FieldLabelProps) {
   return (
-    <label htmlFor={name} className="flex flex-col gap-0.5">
+    <label htmlFor={name} className="flex flex-col w-full">
       <div className="flex flex-row gap-1.5">
-        <Text mainUiAction text04>
+        <Text mainContentEmphasis text04>
           {label}
         </Text>
         {optional && (
-          <Text text03 mainUiMuted as="span">
+          <Text text03 mainContentMuted as="span">
             {" (Optional)"}
           </Text>
         )}

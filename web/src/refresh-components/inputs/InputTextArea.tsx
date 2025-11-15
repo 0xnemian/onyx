@@ -32,11 +32,6 @@ export interface InputTextAreaProps
   erroneous?: boolean;
   internal?: boolean;
   disabled?: boolean;
-
-  placeholder?: string;
-
-  // Minimum number of rows
-  minRows?: number;
 }
 
 function InputTextAreaInner(
@@ -46,11 +41,12 @@ function InputTextAreaInner(
     internal,
     disabled,
 
-    placeholder,
     className,
-    value,
-    onChange,
-    minRows = 4,
+    rows = 4,
+    // placeholder,
+    // value,
+    // onChange,
+    // minRows = 4,
     ...props
   }: InputTextAreaProps,
   ref: React.ForwardedRef<HTMLTextAreaElement>
@@ -103,15 +99,12 @@ function InputTextAreaInner(
     >
       <textarea
         ref={textareaRef}
-        placeholder={placeholder}
         disabled={disabled}
-        value={value}
-        onChange={onChange}
-        rows={minRows}
         className={cn(
           "w-full min-h-[3rem] bg-transparent p-0.5 focus:outline-none resize-y",
           textareaClasses[state]
         )}
+        rows={rows}
         {...props}
       />
     </div>
