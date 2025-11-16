@@ -22,9 +22,11 @@ import Separator from "@/refresh-components/Separator";
 import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
 import { CONVERSATION_STARTERS } from "@/lib/constants";
-import CollapsibleSection from "@/refresh-components/CollapsibleSection";
 import Text from "@/refresh-components/texts/Text";
 import Card from "@/refresh-components/Card";
+import SimpleCollapsible, {
+  SimpleCollapsibleHeader,
+} from "@/refresh-components/SimpleCollapsible";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -161,9 +163,7 @@ function Section({
   className,
   ...rest
 }: React.HtmlHTMLAttributes<HTMLDivElement>) {
-  return (
-    <div className={cn("flex flex-col w-full gap-4", className)} {...rest} />
-  );
+  return <div className={cn("flex flex-col gap-4", className)} {...rest} />;
 }
 
 interface ConversationStartersProps {
@@ -290,6 +290,7 @@ export default function AgentEditorPage({
     <PageLayout
       data-testid="AgentsEditorPage/container"
       aria-label="Agents Editor Page"
+      className="pb-20"
     >
       <Formik
         initialValues={initialValues}
@@ -299,7 +300,7 @@ export default function AgentEditorPage({
         validateOnBlur={true}
       >
         {({ isSubmitting }) => (
-          <Form className="w-full h-full flex flex-col">
+          <Form className="w-full h-fit flex flex-col overflow-hidden">
             <SimplePageHeader
               title={existingAgent ? "Edit Agent" : "Create Agent"}
               rightChildren={
@@ -311,11 +312,9 @@ export default function AgentEditorPage({
 
             {/* Agent Form Content */}
             <div className="py-6 px-8 flex flex-col gap-8 w-full">
-              {/* General */}
-              <Section className="max-w-4xl">
+              <Section>
                 <AgentIconEditor existingAgent={existingAgent} />
 
-                {/* Name */}
                 <LabeledInputTypeIn
                   name="name"
                   label="Name"
@@ -323,7 +322,6 @@ export default function AgentEditorPage({
                   aria-label="agent-name-input"
                 />
 
-                {/* Description */}
                 <LabeledInputTextArea
                   name="description"
                   label="Description"
@@ -333,9 +331,7 @@ export default function AgentEditorPage({
 
               <Separator />
 
-              {/* Prompts */}
-              <Section>
-                {/* Instructions */}
+              {/*<Section>
                 <LabeledInputTextArea
                   name="instructions"
                   label="Instructions"
@@ -344,7 +340,6 @@ export default function AgentEditorPage({
                   description="Add instructions to tailor the response for this agent."
                 />
 
-                {/* Conversation Starters */}
                 <div className="flex flex-col gap-1">
                   <FieldLabel
                     name="conversation_starters"
@@ -354,12 +349,11 @@ export default function AgentEditorPage({
                   />
                   <ConversationStarters maxStarters={MAX_STARTERS} />
                 </div>
-              </Section>
+              </Section>*/}
 
               <Separator />
 
-              {/* Knowledge */}
-              <Section>
+              {/*<Section>
                 <div className="flex flex-col gap-1">
                   <FieldLabel
                     name="knowledge"
@@ -367,28 +361,27 @@ export default function AgentEditorPage({
                     description="Add specific connectors and documents for this agent should use to inform its responses."
                   />
                 </div>
-              </Section>
+              </Section>*/}
 
               <Separator />
 
-              {/* Actions */}
-              <CollapsibleSection
-                title="Actions"
-                description="Tools and capabilities available for this agent to use."
-              >
-                <Section></Section>
-              </CollapsibleSection>
+              {/*<SimpleCollapsible
+                trigger={
+                  <SimpleCollapsibleHeader
+                    title="Actions"
+                    description="Tools and capabilities available for this agent to use."
+                  />
+                }
+              />*/}
 
               <Separator />
 
-              {/* Access */}
-              <Section>
+              {/*<Section>
                 <FieldLabel
                   name="access"
                   label="Access"
                   description="Control who can view and use this agent."
                 />
-
                 <Card>
                   <LabeledSwitchField
                     name="feature_this_agent"
@@ -396,34 +389,33 @@ export default function AgentEditorPage({
                     description="Show this agent in the featured section in the explore list for everyone in your organization. This will also pin the agent for any new users."
                   />
                 </Card>
-              </Section>
+              </Section>*/}
 
               <Separator />
 
-              {/* Advanced */}
-              <CollapsibleSection
-                title="Advanced"
-                description="Fine-tune agent prompts and knowledge."
+              <SimpleCollapsible
+                trigger={
+                  <SimpleCollapsibleHeader
+                    title="Advanced Options"
+                    description="Fine-tune agent prompts and knowledge."
+                  />
+                }
               >
                 <Section>
                   <Card>
-                    {/* Current Datetime Aware */}
                     <LabeledSwitchField
                       name="current_datetime_aware"
                       label="Current Datetime Aware"
                       description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
                     />
-
-                    {/* Prompt Override */}
-                    <LabeledSwitchField
+                    {/*<LabeledSwitchField
                       name="overwrite_system_prompts"
                       label="Overwrite System Prompts"
                       description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
-                    />
+                    />*/}
                   </Card>
 
                   <div className="flex flex-col gap-1">
-                    {/* Reminders */}
                     <LabeledInputTextArea
                       name="reminders"
                       label="Reminders"
@@ -437,7 +429,7 @@ export default function AgentEditorPage({
                     </Text>
                   </div>
                 </Section>
-              </CollapsibleSection>
+              </SimpleCollapsible>
             </div>
           </Form>
         )}
