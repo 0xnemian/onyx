@@ -15,7 +15,7 @@ export interface UnlabeledInputTypeInElementProps
 }
 
 // This component should be used inside of a list in `formik`'s "Form" context.
-export default function UnlabeledInputTypeInElement({
+export default function UnlabeledInputTypeInElementField({
   name,
   onRemove,
   ...inputProps

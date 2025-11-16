@@ -1,30 +1,30 @@
 "use client";
 
 import { useField } from "formik";
-import InputTextArea, {
-  InputTextAreaProps,
-} from "@/refresh-components/inputs/InputTextArea";
+import InputTypeIn, {
+  InputTypeInProps,
+} from "@/refresh-components/inputs/InputTypeIn";
 import {
   FieldLabel,
   FieldError,
 } from "@/refresh-components/formik-fields/helpers";
 
-export interface LabeledInputTextAreaProps
-  extends Omit<InputTextAreaProps, "value" | "onChange"> {
+export interface LabeledInputTypeInProps
+  extends Omit<InputTypeInProps, "value" | "onChange" | "onClear"> {
   name: string;
   label: string;
   optional?: boolean;
   description?: string;
 }
 
-export default function LabeledInputTextArea({
+export default function LabeledInputTypeInField({
   name,
   label,
   optional,
   description,
-  ...textareaProps
-}: LabeledInputTextAreaProps) {
-  const [field, meta] = useField(name);
+  ...inputProps
+}: LabeledInputTypeInProps) {
+  const [field, meta, helpers] = useField(name);
   const hasError = meta.touched && meta.error;
 
   return (
@@ -37,14 +37,17 @@ export default function LabeledInputTextArea({
         description={description}
       />
 
-      {/* Textarea */}
-      <InputTextArea
-        {...textareaProps}
+      {/* Input */}
+      <InputTypeIn
+        {...inputProps}
         id={name}
         name={name}
         value={field.value || ""}
         onChange={field.onChange}
         onBlur={field.onBlur}
+        onClear={() => {
+          helpers.setValue("");
+        }}
         erroneous={!!hasError}
       />
 

@@ -14,9 +14,9 @@ import { buildImgUrl } from "@/app/chat/components/files/images/utils";
 import { cn } from "@/lib/utils";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import LabeledInputTypeIn from "@/refresh-components/formik-fields/LabeledInputTypeIn";
-import LabeledInputTextArea from "@/refresh-components/formik-fields/LabeledInputTextArea";
-import UnlabeledInputTypeInElement from "@/refresh-components/formik-fields/UnlabeledInputTypeInElement";
+import LabeledInputTypeInField from "@/refresh-components/formik-fields/LabeledInputTypeInField";
+import LabeledInputTextAreaField from "@/refresh-components/formik-fields/LabeledInputTextAreaField";
+import UnlabeledInputTypeInElementField from "@/refresh-components/formik-fields/UnlabeledInputTypeInElementField";
 import LabeledSwitchField from "@/refresh-components/formik-fields/LabeledSwitchField";
 import Separator from "@/refresh-components/Separator";
 import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
@@ -195,7 +195,7 @@ function ConversationStarters({ maxStarters }: ConversationStartersProps) {
       {(arrayHelpers) => (
         <div className="flex flex-col gap-2">
           {Array.from({ length: visibleCount }, (_, i) => (
-            <UnlabeledInputTypeInElement
+            <UnlabeledInputTypeInElementField
               key={`starters.${i}`}
               name={`starters.${i}`}
               placeholder={
@@ -315,14 +315,14 @@ export default function AgentEditorPage({
               <Section>
                 <AgentIconEditor existingAgent={existingAgent} />
 
-                <LabeledInputTypeIn
+                <LabeledInputTypeInField
                   name="name"
                   label="Name"
                   placeholder="Name your agent"
                   aria-label="agent-name-input"
                 />
 
-                <LabeledInputTextArea
+                <LabeledInputTextAreaField
                   name="description"
                   label="Description"
                   placeholder="What does this agent do?"
@@ -332,7 +332,7 @@ export default function AgentEditorPage({
               <Separator />
 
               <Section>
-                <LabeledInputTextArea
+                <LabeledInputTextAreaField
                   name="instructions"
                   label="Instructions"
                   placeholder="Think step by step and show reasoning for complex problems. Use specific examples. Emphasize action items, and leave blanks for the human to fill in when you have unknown. Use a polite enthusiastic tone."
@@ -416,7 +416,7 @@ export default function AgentEditorPage({
                   </Card>
 
                   <div className="flex flex-col gap-1">
-                    <LabeledInputTextArea
+                    <LabeledInputTextAreaField
                       name="reminders"
                       label="Reminders"
                       placeholder="Remember, I want you to always format your response as a numbered list."
