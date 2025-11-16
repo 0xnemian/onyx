@@ -56,7 +56,7 @@ export function HorizontalLabelWrapper({
 
 export interface FieldLabelProps {
   name?: string;
-  label: string;
+  label?: string;
   optional?: boolean;
   description?: string;
   className?: string;
@@ -72,7 +72,7 @@ export function FieldLabel({
   className,
 }: FieldLabelProps) {
   const finalClassName = cn("flex flex-col w-full", className);
-  const content = (
+  const content = label ? (
     <>
       <div className="flex flex-row gap-1.5">
         <Text mainContentEmphasis text04>
@@ -90,7 +90,7 @@ export function FieldLabel({
         </Text>
       )}
     </>
-  );
+  ) : null;
 
   return name ? (
     <label htmlFor={name} className={finalClassName}>

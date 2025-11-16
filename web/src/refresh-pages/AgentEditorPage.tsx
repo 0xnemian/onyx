@@ -261,6 +261,7 @@ export default function AgentEditorPage({
     knowledge_cutoff_date: new Date(),
     current_datetime_aware: false,
     overwrite_system_prompts: false,
+    system_prompt_override: "",
     reminders: "",
   };
 
@@ -282,6 +283,14 @@ export default function AgentEditorPage({
     knowledge_cutoff_date: Yup.date().optional(),
     current_datetime_aware: Yup.boolean(),
     overwrite_system_prompts: Yup.boolean(),
+    system_prompt_override: Yup.string().when("overwrite_system_prompts", {
+      is: true,
+      then: (schema) =>
+        schema.required(
+          "System prompt override is required when overwriting system prompts."
+        ),
+      otherwise: (schema) => schema.optional(),
+    }),
     reminders: Yup.string().optional(),
   });
 
@@ -303,7 +312,7 @@ export default function AgentEditorPage({
         validateOnChange={true}
         validateOnBlur={true}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values }) => (
           <Form className="w-full h-fit flex flex-col overflow-hidden">
             <SimplePageHeader
               title={existingAgent ? "Edit Agent" : "Create Agent"}
@@ -420,10 +429,19 @@ export default function AgentEditorPage({
                     <HorizontalLabelWrapper
                       name="overwrite_system_prompts"
                       label="Overwrite System Prompts"
-                      description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
+                      description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "You (the LLM) can provide markdown and it will be rendered").'
                     >
                       <SwitchField name="overwrite_system_prompts" />
                     </HorizontalLabelWrapper>
+
+                    {values.overwrite_system_prompts && (
+                      <VerticalLabelWrapper name="system_prompt_override">
+                        <InputTextAreaField
+                          name="system_prompt_override"
+                          placeholder="You (the LLM) can provide markdown and it will be rendered..."
+                        />
+                      </VerticalLabelWrapper>
+                    )}
                   </Card>
 
                   <div className="flex flex-col gap-1">
