@@ -170,11 +170,9 @@ function Section({
   return <div className={cn("flex flex-col gap-4", className)} {...rest} />;
 }
 
-interface ConversationStartersProps {
-  maxStarters: number;
-}
+function ConversationStarters() {
+  const max_starters = CONVERSATION_STARTERS.length;
 
-function ConversationStarters({ maxStarters }: ConversationStartersProps) {
   const { values } = useFormikContext<{
     starters: string[];
   }>();
@@ -183,11 +181,11 @@ function ConversationStarters({ maxStarters }: ConversationStartersProps) {
 
   // Count how many non-empty starters we have
   const filledStarters = starters.filter((s) => s).length;
-  const canAddMore = filledStarters < maxStarters;
+  const canAddMore = filledStarters < max_starters;
 
   // Show at least 1, or all filled ones, or filled + 1 empty (up to max)
   const visibleCount = Math.min(
-    maxStarters,
+    max_starters,
     Math.max(
       1,
       filledStarters === 0 ? 1 : filledStarters + (canAddMore ? 1 : 0)
@@ -235,8 +233,6 @@ export default function AgentEditorPage({
   tools,
   shouldAddAssistantToUserPreferences,
 }: AgentEditorPageProps) {
-  const MAX_STARTERS = 4;
-
   const initialValues = {
     // General
     icon_color: existingAgent?.icon_color ?? "",
@@ -248,7 +244,7 @@ export default function AgentEditorPage({
     // Prompts
     instructions: existingAgent?.system_prompt ?? "",
     conversation_starters: Array.from(
-      { length: MAX_STARTERS },
+      { length: CONVERSATION_STARTERS.length },
       (_, i) => existingAgent?.starter_messages?.[i] ?? ""
     ),
 
@@ -361,7 +357,7 @@ export default function AgentEditorPage({
                   description="Example messages that help users understand what this agent can do and how to interact with it effectively."
                   optional
                 >
-                  <ConversationStarters maxStarters={MAX_STARTERS} />
+                  <ConversationStarters />
                 </VerticalLabelWrapper>
               </Section>
 
