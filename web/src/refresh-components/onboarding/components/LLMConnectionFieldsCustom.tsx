@@ -136,7 +136,7 @@ export const LLMConnectionFieldsCustom: React.FC<Props> = ({
                 placeholder="https://"
                 showClearButton={false}
                 disabled={disabled}
-                erroneous={
+                error={
                   typeof field.value === "string" &&
                   field.value.trim() !== "" &&
                   apiStatus === "error"
@@ -182,7 +182,7 @@ export const LLMConnectionFieldsCustom: React.FC<Props> = ({
                 placeholder=""
                 showClearButton={false}
                 disabled={disabled}
-                erroneous={apiStatus === "error"}
+                error={apiStatus === "error"}
               />
             </FormField.Control>
             {showApiMessage && (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { cn, noProp } from "@/lib/utils";
 import { useBoundingBox } from "@/hooks/useBoundingBox";
 import SvgX from "@/icons/x";
@@ -14,8 +14,8 @@ const divClasses = {
     "active:!border-border-05",
     "focus-within:!border-border-05",
   ],
-  erroneous: ["border", "border-status-error-05"],
   internal: [],
+  error: ["border", "border-status-error-05"],
   disabled: ["bg-background-neutral-03"],
 } as const;
 
@@ -23,8 +23,8 @@ const inputClasses = {
   main: [
     "text-text-04 placeholder:!font-secondary-body placeholder:text-text-02",
   ],
-  erroneous: [],
   internal: [],
+  error: [],
   disabled: ["text-text-02"],
 } as const;
 
@@ -32,8 +32,8 @@ export interface InputTypeInProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   // Input states:
   main?: boolean;
-  erroneous?: boolean;
   internal?: boolean;
+  error?: boolean;
   disabled?: boolean;
 
   // Stylings:
@@ -54,8 +54,8 @@ export interface InputTypeInProps
 function InputTypeInInner(
   {
     main,
-    erroneous,
     internal,
+    error,
     disabled,
 
     leftSearchIcon,
@@ -84,10 +84,10 @@ function InputTypeInInner(
     ? "main"
     : internal
       ? "internal"
-      : disabled
-        ? "disabled"
-        : erroneous
-          ? "erroneous"
+      : error
+        ? "error"
+        : disabled
+          ? "disabled"
           : "main";
 
   useEffect(() => {

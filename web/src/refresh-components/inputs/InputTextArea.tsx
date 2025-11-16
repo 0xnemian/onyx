@@ -11,8 +11,8 @@ const divClasses = {
     "active:!border-border-05",
     "focus-within:!border-border-05",
   ],
-  erroneous: ["border", "border-status-error-05"],
   internal: [],
+  error: ["border", "border-status-error-05"],
   disabled: ["bg-background-neutral-03"],
 } as const;
 
@@ -20,8 +20,8 @@ const textareaClasses = {
   main: [
     "text-text-04 placeholder:!font-secondary-body placeholder:text-text-02",
   ],
-  erroneous: [],
   internal: [],
+  error: [],
   disabled: ["text-text-02"],
 } as const;
 
@@ -29,24 +29,20 @@ export interface InputTextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   // Input states:
   main?: boolean;
-  erroneous?: boolean;
   internal?: boolean;
+  error?: boolean;
   disabled?: boolean;
 }
 
 function InputTextAreaInner(
   {
     main,
-    erroneous,
     internal,
+    error,
     disabled,
 
     className,
     rows = 4,
-    // placeholder,
-    // value,
-    // onChange,
-    // minRows = 4,
     ...props
   }: InputTextAreaProps,
   ref: React.ForwardedRef<HTMLTextAreaElement>
@@ -61,10 +57,10 @@ function InputTextAreaInner(
     ? "main"
     : internal
       ? "internal"
-      : disabled
-        ? "disabled"
-        : erroneous
-          ? "erroneous"
+      : error
+        ? "error"
+        : disabled
+          ? "disabled"
           : "main";
 
   useEffect(() => {

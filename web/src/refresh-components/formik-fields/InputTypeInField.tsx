@@ -28,7 +28,7 @@ export default function InputTypeInField({
       onClear={() => {
         helpers.setValue("");
       }}
-      erroneous={!!hasError}
+      error={!!hasError}
     />
   );
 }
