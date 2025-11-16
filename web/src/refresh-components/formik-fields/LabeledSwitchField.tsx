@@ -28,7 +28,10 @@ export default function LabeledInputSwitch({
   return (
     <div className="flex flex-col gap-1 h-full w-full">
       {/* Label and Switch Row */}
-      <div className="flex flex-row items-start justify-between gap-4">
+      <label
+        htmlFor={name}
+        className="flex flex-row items-start justify-between gap-4 cursor-pointer"
+      >
         {/* Left side: Label */}
         <div className="w-[70%]">
           <FieldLabel
@@ -40,8 +43,8 @@ export default function LabeledInputSwitch({
         </div>
 
         {/* Right side: Switch */}
-        <UnlabeledSwitchField name={name} {...props} />
-      </div>
+        <UnlabeledSwitchField name={name} id={name} {...props} />
+      </label>
 
       {/* Error Message */}
       <FieldError error={hasError ? meta.error : undefined} />
