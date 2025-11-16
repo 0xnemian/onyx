@@ -39,6 +39,7 @@ export default function LabeledInputSwitch({
             label={label}
             description={description}
             optional={optional}
+            className="cursor-pointer"
           />
         </div>
 

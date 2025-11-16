@@ -1,4 +1,5 @@
 import SvgXOctagon from "@/icons/x-octagon";
+import { cn } from "@/lib/utils";
 import Text from "@/refresh-components/texts/Text";
 
 interface FieldLabelProps {
@@ -6,6 +7,7 @@ interface FieldLabelProps {
   label: string;
   optional?: boolean;
   description?: string;
+  className?: string;
 }
 
 export function FieldLabel({
@@ -13,9 +15,10 @@ export function FieldLabel({
   label,
   optional,
   description,
+  className,
 }: FieldLabelProps) {
   return (
-    <label htmlFor={name} className="flex flex-col w-full">
+    <label htmlFor={name} className={cn("flex flex-col w-full", className)}>
       <div className="flex flex-row gap-1.5">
         <Text mainContentEmphasis text04>
           {label}
