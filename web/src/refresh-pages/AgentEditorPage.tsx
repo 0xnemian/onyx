@@ -355,15 +355,14 @@ export default function AgentEditorPage({
                   />
                 </VerticalLabelWrapper>
 
-                <div className="flex flex-col gap-1">
-                  <FieldLabel
-                    name="conversation_starters"
-                    label="Conversation Starters"
-                    description="Example messages that help users understand what this agent can do and how to interact with it effectively."
-                    optional
-                  />
+                <VerticalLabelWrapper
+                  name="conversation_starters"
+                  label="Conversation Starters"
+                  description="Example messages that help users understand what this agent can do and how to interact with it effectively."
+                  optional
+                >
                   <ConversationStarters maxStarters={MAX_STARTERS} />
-                </div>
+                </VerticalLabelWrapper>
               </Section>
 
               <Separator />

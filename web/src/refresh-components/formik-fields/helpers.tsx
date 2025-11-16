@@ -4,6 +4,7 @@ import Text from "@/refresh-components/texts/Text";
 import { useField } from "formik";
 
 export interface LabelWrapperProps extends FieldLabelProps {
+  name: string;
   children?: React.ReactNode;
 }
 
@@ -20,7 +21,7 @@ export function VerticalLabelWrapper({
     <div className="flex flex-col w-full h-full gap-1">
       <FieldLabel name={name} {...fieldLabelProps} />
       {children}
-      <FieldError error={hasError ? meta.error : undefined} />
+      <FieldError name={name} />
     </div>
   );
 }
@@ -49,7 +50,7 @@ export function HorizontalLabelWrapper({
         </div>
         {children}
       </label>
-      <FieldError error={hasError ? meta.error : undefined} />
+      <FieldError name={name} />
     </div>
   );
 }
@@ -101,18 +102,21 @@ export function FieldLabel({
   );
 }
 
-export interface FieldErrorProps {
-  error?: string;
+interface FieldErrorProps {
+  name: string;
 }
 
-export function FieldError({ error }: FieldErrorProps) {
-  if (!error) return null;
+function FieldError({ name }: FieldErrorProps) {
+  const [, meta] = useField(name);
+  const hasError = meta.touched && meta.error;
+
+  if (!hasError) return null;
 
   return (
     <div className="flex flex-row items-center gap-1 px-1">
       <SvgXOctagon className="w-[0.75rem] h-[0.75rem] stroke-status-error-05" />
       <Text secondaryBody className="text-status-error-05" role="alert">
-        {error}
+        {meta.error}
       </Text>
     </div>
   );
