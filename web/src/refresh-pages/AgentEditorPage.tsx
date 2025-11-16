@@ -14,12 +14,15 @@ import { buildImgUrl } from "@/app/chat/components/files/images/utils";
 import { cn } from "@/lib/utils";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import LabeledInputTypeInField from "@/refresh-components/formik-fields/LabeledInputTypeInField";
-import LabeledInputTextAreaField from "@/refresh-components/formik-fields/LabeledInputTextAreaField";
-import UnlabeledInputTypeInElementField from "@/refresh-components/formik-fields/UnlabeledInputTypeInElementField";
-import LabeledSwitchField from "@/refresh-components/formik-fields/LabeledSwitchField";
+import InputTypeInField from "@/refresh-components/formik-fields/InputTypeInField";
+import InputTextAreaField from "@/refresh-components/formik-fields/InputTextAreaField";
+import InputTypeInElementField from "@/refresh-components/formik-fields/InputTypeInElementField";
 import Separator from "@/refresh-components/Separator";
-import { FieldLabel } from "@/refresh-components/formik-fields/helpers";
+import {
+  FieldLabel,
+  HorizontalLabelWrapper,
+  VerticalLabelWrapper,
+} from "@/refresh-components/formik-fields/helpers";
 import { useFormikContext } from "formik";
 import { CONVERSATION_STARTERS } from "@/lib/constants";
 import Text from "@/refresh-components/texts/Text";
@@ -27,6 +30,7 @@ import Card from "@/refresh-components/Card";
 import SimpleCollapsible, {
   SimpleCollapsibleHeader,
 } from "@/refresh-components/SimpleCollapsible";
+import SwitchField from "@/refresh-components/formik-fields/SwitchField";
 
 interface AgentIconEditorProps {
   existingAgent?: FullPersona | null;
@@ -195,7 +199,7 @@ function ConversationStarters({ maxStarters }: ConversationStartersProps) {
       {(arrayHelpers) => (
         <div className="flex flex-col gap-2">
           {Array.from({ length: visibleCount }, (_, i) => (
-            <UnlabeledInputTypeInElementField
+            <InputTypeInElementField
               key={`starters.${i}`}
               name={`starters.${i}`}
               placeholder={
@@ -315,30 +319,32 @@ export default function AgentEditorPage({
               <Section>
                 <AgentIconEditor existingAgent={existingAgent} />
 
-                <LabeledInputTypeInField
-                  name="name"
-                  label="Name"
-                  placeholder="Name your agent"
-                  aria-label="agent-name-input"
-                />
+                <VerticalLabelWrapper name="name" label="Name">
+                  <InputTypeInField name="name" placeholder="Name your agent" />
+                </VerticalLabelWrapper>
 
-                <LabeledInputTextAreaField
-                  name="description"
-                  label="Description"
-                  placeholder="What does this agent do?"
-                />
+                <VerticalLabelWrapper name="description" label="Description">
+                  <InputTextAreaField
+                    name="description"
+                    placeholder="What does this agent do?"
+                  />
+                </VerticalLabelWrapper>
               </Section>
 
               <Separator />
 
               <Section>
-                <LabeledInputTextAreaField
+                <VerticalLabelWrapper
                   name="instructions"
                   label="Instructions"
-                  placeholder="Think step by step and show reasoning for complex problems. Use specific examples. Emphasize action items, and leave blanks for the human to fill in when you have unknown. Use a polite enthusiastic tone."
                   optional
                   description="Add instructions to tailor the response for this agent."
-                />
+                >
+                  <InputTextAreaField
+                    name="instructions"
+                    placeholder="Think step by step and show reasoning for complex problems. Use specific examples. Emphasize action items, and leave blanks for the human to fill in when you have unknown. Use a polite enthusiastic tone."
+                  />
+                </VerticalLabelWrapper>
 
                 <div className="flex flex-col gap-1">
                   <FieldLabel
@@ -378,16 +384,17 @@ export default function AgentEditorPage({
 
               <Section>
                 <FieldLabel
-                  name="access"
                   label="Access"
                   description="Control who can view and use this agent."
                 />
                 <Card>
-                  <LabeledSwitchField
+                  <HorizontalLabelWrapper
                     name="feature_this_agent"
                     label="Feature This Agent"
                     description="Show this agent in the featured section in the explore list for everyone in your organization. This will also pin the agent for any new users."
-                  />
+                  >
+                    <SwitchField name="feature_this_agent" />
+                  </HorizontalLabelWrapper>
                 </Card>
               </Section>
 
@@ -403,24 +410,29 @@ export default function AgentEditorPage({
               >
                 <Section>
                   <Card>
-                    <LabeledSwitchField
+                    <HorizontalLabelWrapper
                       name="current_datetime_aware"
                       label="Current Datetime Aware"
                       description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
-                    />
-                    <LabeledSwitchField
+                    >
+                      <SwitchField name="current_datetime_aware" />
+                    </HorizontalLabelWrapper>
+                    <HorizontalLabelWrapper
                       name="overwrite_system_prompts"
                       label="Overwrite System Prompts"
                       description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
-                    />
+                    >
+                      <SwitchField name="overwrite_system_prompts" />
+                    </HorizontalLabelWrapper>
                   </Card>
 
                   <div className="flex flex-col gap-1">
-                    <LabeledInputTextAreaField
-                      name="reminders"
-                      label="Reminders"
-                      placeholder="Remember, I want you to always format your response as a numbered list."
-                    />
+                    <VerticalLabelWrapper name="reminders" label="Reminders">
+                      <InputTextAreaField
+                        name="reminders"
+                        placeholder="Remember, I want you to always format your response as a numbered list."
+                      />
+                    </VerticalLabelWrapper>
                     <Text text03 secondaryBody>
                       Append a brief reminder to the prompt messages. Use this
                       to remind the agent if you find that it tends to forget
