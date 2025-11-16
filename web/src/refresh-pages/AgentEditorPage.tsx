@@ -331,7 +331,7 @@ export default function AgentEditorPage({
 
               <Separator />
 
-              {/*<Section>
+              <Section>
                 <LabeledInputTextArea
                   name="instructions"
                   label="Instructions"
@@ -349,11 +349,11 @@ export default function AgentEditorPage({
                   />
                   <ConversationStarters maxStarters={MAX_STARTERS} />
                 </div>
-              </Section>*/}
+              </Section>
 
               <Separator />
 
-              {/*<Section>
+              <Section>
                 <div className="flex flex-col gap-1">
                   <FieldLabel
                     name="knowledge"
@@ -361,22 +361,22 @@ export default function AgentEditorPage({
                     description="Add specific connectors and documents for this agent should use to inform its responses."
                   />
                 </div>
-              </Section>*/}
+              </Section>
 
               <Separator />
 
-              {/*<SimpleCollapsible
+              <SimpleCollapsible
                 trigger={
                   <SimpleCollapsibleHeader
                     title="Actions"
                     description="Tools and capabilities available for this agent to use."
                   />
                 }
-              />*/}
+              />
 
               <Separator />
 
-              {/*<Section>
+              <Section>
                 <FieldLabel
                   name="access"
                   label="Access"
@@ -389,7 +389,7 @@ export default function AgentEditorPage({
                     description="Show this agent in the featured section in the explore list for everyone in your organization. This will also pin the agent for any new users."
                   />
                 </Card>
-              </Section>*/}
+              </Section>
 
               <Separator />
 
@@ -408,11 +408,11 @@ export default function AgentEditorPage({
                       label="Current Datetime Aware"
                       description='Include the current date and time explicitly in the agent prompt (formatted as "Thursday Jan 1, 1970 00:01"). To inject it in a specific place in the prompt, use the pattern [[CURRENT_DATETIME]].'
                     />
-                    {/*<LabeledSwitchField
+                    <LabeledSwitchField
                       name="overwrite_system_prompts"
                       label="Overwrite System Prompts"
                       description='Completely replace the base system prompt. This might affect response quality since it will also overwrite useful system instructions (e.g. "you (the LLM) can provide markdown and it will be rendered").'
-                    />*/}
+                    />
                   </Card>
 
                   <div className="flex flex-col gap-1">
