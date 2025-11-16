@@ -1,15 +1,69 @@
 import SvgXOctagon from "@/icons/x-octagon";
 import { cn } from "@/lib/utils";
 import Text from "@/refresh-components/texts/Text";
+import { useField } from "formik";
 
-interface FieldLabelProps {
-  name: string;
+export interface LabelWrapperProps extends FieldLabelProps {
+  children?: React.ReactNode;
+}
+
+export function VerticalLabelWrapper({
+  children,
+
+  name,
+  ...fieldLabelProps
+}: LabelWrapperProps) {
+  const [, meta] = useField(name);
+  const hasError = meta.touched && meta.error;
+
+  return (
+    <div className="flex flex-col w-full h-full gap-1">
+      <FieldLabel name={name} {...fieldLabelProps} />
+      {children}
+      <FieldError error={hasError ? meta.error : undefined} />
+    </div>
+  );
+}
+
+export function HorizontalLabelWrapper({
+  children,
+
+  name,
+  className,
+  ...fieldLabelProps
+}: LabelWrapperProps) {
+  const [, meta] = useField<boolean>(name);
+  const hasError = meta.touched && meta.error;
+
+  return (
+    <div className="flex flex-col gap-1 h-full w-full">
+      <label
+        htmlFor={name}
+        className="flex flex-row items-start justify-between gap-4 cursor-pointer"
+      >
+        <div className="w-[70%]">
+          <FieldLabel
+            className={cn("cursor-pointer", className)}
+            {...fieldLabelProps}
+          />
+        </div>
+        {children}
+      </label>
+      <FieldError error={hasError ? meta.error : undefined} />
+    </div>
+  );
+}
+
+export interface FieldLabelProps {
+  name?: string;
   label: string;
   optional?: boolean;
   description?: string;
   className?: string;
 }
 
+// If you do not pass anything to the `name` prop, this renders a NON-`label` tag (i.e., a simple `div`).
+// Use it if you want the UI rendering without the HTML labelling features.
 export function FieldLabel({
   name,
   label,
@@ -17,8 +71,9 @@ export function FieldLabel({
   description,
   className,
 }: FieldLabelProps) {
-  return (
-    <label htmlFor={name} className={cn("flex flex-col w-full", className)}>
+  const finalClassName = cn("flex flex-col w-full", className);
+  const content = (
+    <>
       <div className="flex flex-row gap-1.5">
         <Text mainContentEmphasis text04>
           {label}
@@ -34,11 +89,19 @@ export function FieldLabel({
           {description}
         </Text>
       )}
+    </>
+  );
+
+  return name ? (
+    <label htmlFor={name} className={finalClassName}>
+      {content}
     </label>
+  ) : (
+    <div className={finalClassName}>{content}</div>
   );
 }
 
-interface FieldErrorProps {
+export interface FieldErrorProps {
   error?: string;
 }
 
