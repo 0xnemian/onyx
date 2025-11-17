@@ -16,7 +16,7 @@ const divClasses = {
   ],
   internal: [],
   error: ["border", "border-status-error-05"],
-  disabled: ["bg-background-neutral-03"],
+  disabled: ["bg-background-neutral-03", "border"],
 } as const;
 
 const inputClasses = {
