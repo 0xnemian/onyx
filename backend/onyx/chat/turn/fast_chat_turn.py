@@ -42,6 +42,9 @@ from onyx.chat.turn.models import ChatTurnDependencies
 from onyx.chat.turn.prompts.custom_instruction import build_custom_instructions
 from onyx.chat.turn.save_turn import extract_final_answer_from_packets
 from onyx.chat.turn.save_turn import save_turn
+from onyx.llm.prompt_cache.utils import (
+    apply_prompt_caching_to_agent_messages,
+)
 from onyx.server.query_and_chat.streaming_models import CitationDelta
 from onyx.server.query_and_chat.streaming_models import CitationInfo
 from onyx.server.query_and_chat.streaming_models import CitationStart
@@ -140,6 +143,14 @@ def _run_agent_loop(
             + [current_user_message]
         )
         current_messages = previous_messages + agent_turn_messages
+
+        # Apply prompt caching: cache system message + history, with current user message as suffix
+        # Only apply when there is history to cache (system prompt + previous messages)
+        current_messages = apply_prompt_caching_to_agent_messages(
+            messages=current_messages,
+            llm=dependencies.llm,
+        )
+
         ctx.current_input_tokens = _extract_tokens_from_messages(current_messages)
 
         if not available_tools:
