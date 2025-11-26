@@ -15,13 +15,13 @@ permissions:
 
 jobs:
   validate-requirements:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 45
     steps:
       - name: Checkout code
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # ratchet:actions/checkout@v6
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Setup uv
         uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # ratchet:astral-sh/setup-uv@v3
